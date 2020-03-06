@@ -1,14 +1,14 @@
 package com.similar.services;
 
+import net.minidev.json.JSONObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.*;
 
 @Service
-public class StatsService {
+public class DataService {
     private static String URL = "src\\main\\resources\\static\\words_clean.txt";
     HashMap<String,ArrayList<String>> permsMap;
     private int totalWords;
@@ -23,6 +23,7 @@ public class StatsService {
     }
 
     /**
+     * for better performance we want to keep the data in the memory:
      * Arranging the data as map, such as the key is sorted word, and values are all the permutations of that word.
      * @throws FileNotFoundException
      */
@@ -68,5 +69,13 @@ public class StatsService {
     @Bean
     public HashMap<String, ArrayList<String>> getPermsMap() {
         return permsMap;
+    }
+    @Bean
+    public JSONObject getJsonStats(){
+        JSONObject json = new JSONObject();
+        json.put("totalWords", getTotalWords());
+        json.put("totalRequests", getTotalRequests());
+        json.put("avgProcessingTimeNs", getAvgProcTimeNs());
+        return json;
     }
 }
