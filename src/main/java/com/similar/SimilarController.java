@@ -3,13 +3,12 @@ package com.similar;
 import com.similar.services.PermutationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import net.minidev.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.similar.services.DataService;
-
-import java.util.ArrayList;
 
 @Controller
 public class SimilarController {
@@ -25,7 +24,7 @@ public class SimilarController {
         return ResponseEntity.ok(stats);
     }
 
-    @GetMapping(value = "/api/v1/similar", produces="application/json")
+    @GetMapping(value = "/api/v1/similar", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity similar(@RequestParam(name="word", required=true, defaultValue = "") String word){
         long start = System.nanoTime();
         JSONObject similars = permutationsService.getJsonSimilars(word);
