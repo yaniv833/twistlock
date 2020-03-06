@@ -30,7 +30,6 @@ public class SimilarController {
     }
 
     @GetMapping("/api/v1/similar")
-    //check about required value
     public String similar(@RequestParam(name="word", required=true) String word, Model model) throws FileNotFoundException {
         long start = System.nanoTime();
         ArrayList<String> similarWords = permutationsService.similar(word);
